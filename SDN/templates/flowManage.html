@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link type="text/css" rel="stylesheet" href="../static/css/jquery-ui-1.10.4.custom.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/main.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/style-responsive.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/zabuto_calendar.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/pace.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/jquery.news-ticker.css">
+	    <script src="../static/js/jquery-1.10.2.min.js"></script>
+	    <script src="../static/js/jquery-migrate-1.2.1.min.js"></script>
+	    <script src="../static/js/jquery-ui.js"></script>
+	    <script src="../static/js/bootstrap.min.js"></script>
+	    <script src="../static/js/bootstrap-hover-dropdown.js"></script>
+
+	    <script src="../static/js/jquery.metisMenu.js"></script>
+	    <script src="../static/js/jquery.slimscroll.js"></script>
+	    <script src="../static/js/jquery.cookie.js"></script>
+
+	    <script src="../static/js/icheck.min.js"></script>
+	    <script src="../static/js/custom.min.js"></script>
+	    <script src="../static/js/jquery.news-ticker.js"></script>
+	    <script src="../static/js/jquery.menu.js"></script>
+	    <script src="../static/js/pace.min.js"></script>
+
+	    <script src="../static/js/jquery.flot.js"></script>
+	    <script src="../static/js/jquery.flot.categories.js"></script>
+	    <script src="../static/js/jquery.flot.pie.js"></script>
+	    <script src="../static/js/jquery.flot.tooltip.js"></script>
+	    <script src="../static/js/jquery.flot.resize.js"></script>
+	    <script src="../static/js/jquery.flot.fillbetween.js"></script>
+	    <script src="../static/js/jquery.flot.stack.js"></script>
+	    <script src="../static/js/jquery.flot.spline.js"></script>
+	    <script src="../static/js/zabuto_calendar.min.js"></script>
+	    <script src="../static/js/index.js"></script>
+        <script src="../static/js/echarts.min.js"></script>
+
+	    <!--CORE JAVASCRIPT-->
+	    <script src="../static/js/main.js"></script>
+		<script type="text/javascript"></script>
+
+       <script src="http://demo.qunee.com/lib/qunee-min.js"></script>
+        <script type="text/javascript">
+            function del(obj)
+		{
+			   $('#del-modal').modal('toggle');
+		}
+
+        </script>
+	</head>
+
+
+    <body>
+
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+                    <div class="page-header pull-left">
+                        <div class="page-title">
+                           	 节点流表下发</div>
+                    </div>
+                    <ol class="breadcrumb page-breadcrumb pull-right">
+                        <li><i class="fa fa-home"></i>&nbsp;<a href="">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="hidden"><a href="#"></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="active">流表下发</li>
+                    </ol>
+                    <div class="clearfix">
+                    </div>
+        </div>
+		<div >
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					流表下发
+				</div>
+				<div class="panel-body">
+                <form action="/addflow" method="post">
+                    <table class="table table-bordered table-striped">
+                        <th>字段</th>
+                        <th>选项</th>
+
+                  <tr>
+                      <td>交换机ID</td>
+                      <td>
+                        <select name="openid">
+                              {% for i in openlist %}
+                                  <option  value={{ i }} >{{ i }}</option>
+                              {% endfor %}
+                        </select>
+
+                      </td>
+                  </tr>
+                    <tr>
+                        <td>流表ID</td>
+                        <td>
+                            <input type="text" name="flow_id" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>匹配方式</td>
+                        <td>
+                            <input type="text" name="ethernet_type"  placeholder="如：0x0800">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>源端口</td>
+                        <td>
+                            <input type="text" name="in_port" placeholder="如：openflow:1:1">
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>目的端口</td>
+                        <td>
+                            <input type="text" name="out_port" placeholder="如：openflow:1:2">
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>源IP</td>
+                        <td>
+                            <input type="text" name="s_ip" placeholder="如：192.168.1.1/24">
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>目的IP</td>
+                        <td>
+                            <input type="text" name="d_ip" placeholder="如：192.168.1.2/24">
+                        </td>
+                    </tr>
+                      <tr>
+                        <td>优先级</td>
+                        <td>
+                            <input type="text" name="prov">
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>行为</td>
+                        <td>
+                            <input type="radio" name="cz" value="DROP">丢包
+                            <input type="radio" name="cz" value="OUTPUT">转发
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>MeterID</td>
+                        <td>
+                           <input type="text" name="meter">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            协议
+                        </td>
+                        <td>
+                            <select name="layer4">
+                                <option value=""></option>
+                                <option value="TCP">TCP</option>
+                                <option value="UDP">UDP</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            协议源端口
+                        </td>
+                        <td>
+                           <input type="text" name="inport" >
+                        </td>
+                    </tr>
+                        <tr>
+                        <td>
+                            协议目的端口
+                        </td>
+                        <td>
+                           <input type="text" name="outport" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>操作</td>
+                        <td><button  type="submit" class="btn btn-info"  >确认</button>
+                            <button id="cancel" type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                        </td>
+                    </tr>
+                    </table>
+                </form>
+				</div>
+			</div>
+
+
+
+
+
+
+		</div>
+
+        <div class="panel panel-default">
+				<div class="panel-heading">
+					流表
+				</div>
+				<div class="panel-body">
+
+                {% for i in flowlist['data'] %}
+
+                    <table class="table table-bordered table-striped">
+                    <tr>
+                        <td id="swid">{{ i['id'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>Table</td>
+                        <td>Cookie</td>
+                        <td>Priority</td>
+                        <td>Match</td>
+                        <td>Instruction</td>
+                        <td>操作</td>
+                    </tr>
+                    {% for t in i['flows'] %}
+                        <tr>
+                          <td>{{ t['id'] }}</td>
+                        <td>{{ t['table'] }}</td>
+                        <td>{{ t['cookie'] }}</td>
+                        <td>{{ t['priority'] }}</td>
+                        <td>{{ t['match'] }}</td>
+                        <td>{{ t['instructions'] }}</td>
+                        <td><button class="btn btn-danger" onclick="del(this)">删除流表</button></td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                     <hr>
+                {% endfor %}
+				</div>
+
+
+
+        <div class="modal fade" id="del-modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								是否删除此流表？
+							</div>
+							<div class="modal-body">
+					         <form id="del" action="/deleteflow" method="post">
+					         	交换机ID：<input type="text" name="swid" class="form-control" placeholder="请输入交换机ID">
+                                 流表ID：<input type="text" name="id" class="form-control" placeholder="请输入流表ID">
+                             </div>
+							<div class="modal-footer">
+                                <button id="dsubmit" type="submit" class="btn btn-info" >确认删除</button>
+                                </form>
+								<button id="cancel" type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+        </div>
+
+
+
+
+
+
+
+
+        <div id="keyWordCount2" style="width:1000px;height:500px;margin:0 auto"></div>
+
+	</body>
+</html>

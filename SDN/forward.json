@@ -1,0 +1,37 @@
+{
+        "input": {
+            "match": {
+                "in-port": "2",
+                "ethernet-match": {
+                    "ethernet-type": {
+                        "type": "0x0800"
+                    }
+                },
+                "ipv4-source": "10.0.0.1/32",
+                "ipv4-destination": "10.0.0.2/32"
+            },
+            "instructions": {
+                "instruction": [
+                    {
+                        "order": "0",
+                        "apply-actions": {
+                            "action": [
+                                {
+                                    "order": "0",
+                                    "output-action": {
+                                        "output-node-connector": "3",
+                                        "max-length": "64"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "priority": "101",
+            "idle-timeout": "0",
+            "hard-timeout": "0",
+            "table_id": "0",
+            "node": "/opendaylight-inventory:nodes/opendaylight-inventory:node[opendaylight-inventory:id='openflow:1']"
+        }
+}

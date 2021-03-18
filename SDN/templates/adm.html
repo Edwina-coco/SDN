@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link type="text/css" rel="stylesheet" href="../static/css/jquery-ui-1.10.4.custom.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/main.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/style-responsive.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/zabuto_calendar.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/pace.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/jquery.news-ticker.css">
+	    <script src="../static/js/jquery-1.10.2.min.js"></script>
+	    <script src="../static/js/jquery-migrate-1.2.1.min.js"></script>
+	    <script src="../static/js/jquery-ui.js"></script>
+	    <script src="../static/js/bootstrap.min.js"></script>
+	    <script src="../static/js/bootstrap-hover-dropdown.js"></script>
+
+	    <script src="../static/js/jquery.metisMenu.js"></script>
+	    <script src="../static/js/jquery.slimscroll.js"></script>
+	    <script src="../static/js/jquery.cookie.js"></script>
+
+	    <script src="../static/js/icheck.min.js"></script>
+	    <script src="../static/js/custom.min.js"></script>
+	    <script src="../static/js/jquery.news-ticker.js"></script>
+	    <script src="../static/js/jquery.menu.js"></script>
+	    <script src="../static/js/pace.min.js"></script>
+
+	    <script src="../static/js/jquery.flot.js"></script>
+	    <script src="../static/js/jquery.flot.categories.js"></script>
+	    <script src="../static/js/jquery.flot.pie.js"></script>
+	    <script src="../static/js/jquery.flot.tooltip.js"></script>
+	    <script src="../static/js/jquery.flot.resize.js"></script>
+	    <script src="../static/js/jquery.flot.fillbetween.js"></script>
+	    <script src="../static/js/jquery.flot.stack.js"></script>
+	    <script src="../static/js/jquery.flot.spline.js"></script>
+	    <script src="../static/js/zabuto_calendar.min.js"></script>
+	    <script src="../static/js/index.js"></script>
+
+
+	    <!--CORE JAVASCRIPT-->
+	    <script src="../static/js/main.js"></script>
+		<script type="text/javascript">
+function update(){
+               {#var id= "{{userList.id}}"#}
+               {#var name= "{{userList.s_name}} "#}
+			   {#$('#editstudentform [name=user]').val(user);#}
+			   {#$('#editstudentform [name=pwd]').val( pwd);#}
+			 $('#editstudent-modal').modal('toggle');
+		     }
+
+		function editinfo(){
+		     {#  var user= "{{userinfo[0]}}"#}
+            {#$('#editstudentinfoform[name=user]').val(user)#}
+			   $('#editstudentinfo-modal').modal('toggle');
+		}
+</script>
+	</head>
+	<body>
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+                    <div class="page-header pull-left">
+                        <div class="page-title">
+                           	 个人信息管理</div>
+                    </div>
+                    <ol class="breadcrumb page-breadcrumb pull-right">
+                        <li><i class="fa fa-home"></i>&nbsp;<a href="">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="hidden"><a href="#"></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="active">个人信息管理</li>
+                    </ol>
+                    <div class="clearfix">
+                    </div>
+        </div>
+		<div >
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					个人信息
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered table-striped" id="uinfo">
+						<tr>
+							<td>姓名</td><td> {{userinfo[1] }}</td>
+						<tr>
+							<td>QQ</td><td> {{userinfo[3] }}</td>
+						</tr>
+						<tr>
+							<td>电话</td><td> {{userinfo[2] }}</td>
+						</tr>
+						<tr>
+							<td>邮箱</td><td> {{userinfo[4] }}</td>
+						</tr>
+						<tr>
+							<td>住址</td><td> {{userinfo[5] }}</td>
+						</tr>
+						<tr>
+							<td>操作</td>
+							<td>
+								<button type="button" class="btn btn-danger" onclick="update()">修改密码</button>
+								<button  type="button" class="btn btn-info" onclick="editinfo()">修改个人信息</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+        <div class="modal fade" id="editstudent-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						修改新密码
+					</div>
+					<div class="modal-body">
+			         <form id="editstudentform" action="/updatepwd" target="contentFrame" method="post">
+                        账号：<input type="text" name="user" class="form-control" value="{{ userinfo[0] }}">
+			         	新密码:<input type="password" name="pwd" class="form_control" placeholder="请输入新密码">
+					</div>
+					<div class="modal-footer">
+						<button id="delsubmit" type="submit" class="btn btn-info"  >确认</button>
+					</form>
+						<button id="cancel" type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="editstudentinfo-modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						修改用户信息
+					</div>
+					<div class="modal-body">
+			         <form id="editstudentinfoform" action="/updateinfo" method="post">
+                          账号：<input type="text" name="user" class="form-control" value="{{userinfo[0]}}">
+			         	&nbsp;姓名：<input type="text" name="name" class="form-control" value="{{userinfo[1]}}">
+			         	&nbsp;手机号：<input type="text" name="tel" class="form-control" value="{{userinfo[2]}}">
+			         	&nbsp;邮箱：<input type="text" name="email" class="form-control" value="{{userinfo[4]}}">
+			         	&nbsp;住址：<input type="text" name="home" class="form-control" value="{{userinfo[5]}}">
+			         	&nbsp;QQ：<input type="text" name="qq" class="form-control" value="{{userinfo[3]}}">
+					</div>
+					<div class="modal-footer">
+						<button  type="submit" class="btn btn-info"  >确认</button>
+					</form>
+						<button id="cancel" type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

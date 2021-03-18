@@ -1,0 +1,31 @@
+{
+
+        "input": {
+            "match": {
+                "in-port": "2",
+                "ipv4-source": "10.0.0.1/32",
+                "ipv4-destination": "10.0.0.3/32"
+            },
+            "instructions": {
+                "instruction": [
+                    {
+                        "order": "0",
+                        "apply-actions": {
+                            "action": [
+                                {
+                                    "order": "0",
+                                    "drop-action": {}
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "priority": "101",
+            "idle-timeout": "0",
+            "hard-timeout": "0",
+            "table_id": "0",
+            "node": "/opendaylight-inventory:nodes/opendaylight-inventory:node[opendaylight-inventory:id='openflow:1']"
+        }
+
+}

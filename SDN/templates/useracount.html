@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link type="text/css" rel="stylesheet" href="../static/css/jquery-ui-1.10.4.custom.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/font-awesome.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/main.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/style-responsive.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/zabuto_calendar.min.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/pace.css">
+	    <link type="text/css" rel="stylesheet" href="../static/css/jquery.news-ticker.css">
+	    <script src="../static/js/jquery-1.10.2.min.js"></script>
+	    <script src="../static/js/jquery-migrate-1.2.1.min.js"></script>
+	    <script src="../static/js/jquery-ui.js"></script>
+	    <script src="../static/js/bootstrap.min.js"></script>
+	    <script src="../static/js/bootstrap-hover-dropdown.js"></script>
+
+	    <script src="../static/js/jquery.metisMenu.js"></script>
+	    <script src="../static/js/jquery.slimscroll.js"></script>
+	    <script src="../static/js/jquery.cookie.js"></script>
+
+	    <script src="../static/js/icheck.min.js"></script>
+	    <script src="../static/js/custom.min.js"></script>
+	    <script src="../static/js/jquery.news-ticker.js"></script>
+	    <script src="../static/js/jquery.menu.js"></script>
+	    <script src="../static/js/pace.min.js"></script>
+
+	    <script src="../static/js/jquery.flot.js"></script>
+	    <script src="../static/js/jquery.flot.categories.js"></script>
+	    <script src="../static/js/jquery.flot.pie.js"></script>
+	    <script src="../static/js/jquery.flot.tooltip.js"></script>
+	    <script src="../static/js/jquery.flot.resize.js"></script>
+	    <script src="../static/js/jquery.flot.fillbetween.js"></script>
+	    <script src="../static/js/jquery.flot.stack.js"></script>
+	    <script src="../static/js/jquery.flot.spline.js"></script>
+	    <script src="../static/js/zabuto_calendar.min.js"></script>
+	    <script src="../static/js/index.js"></script>
+
+
+	    <!--CORE JAVASCRIPT-->
+	    <script src="../static/js/main.js"></script>
+		<script type="text/javascript"></script>
+         <style type="text/css">
+			a{
+				color: gray;
+			}
+			a:hover{
+				text-decoration: none;
+			}
+			ul{
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+     <script type="text/javascript">
+		function editteacher(obj){
+			 $('#editteacher-modal').modal('toggle');
+		}
+
+		function addteacher(){
+			$('#addteacher-modal').modal('toggle');
+		}
+		function delteacher(obj)
+		{
+			   $('#delteacher-modal').modal('toggle');
+		}
+		function checktext()
+		{
+		    if(document.getElementById('t_ids').value.length==0){
+				  alert('账号不能为空！');
+			     document.getElementById('t_ids').focus();
+				    return false;
+			}
+		    else return true;
+
+		}
+	</script>
+	</head>
+	<body>
+
+         <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+                    <div class="page-header pull-left">
+                        <div class="page-title">
+                           	 用户信息管理</div>
+                    </div>
+                    <ol class="breadcrumb page-breadcrumb pull-right">
+                        <li><i class="fa fa-home"></i>&nbsp;<a href="">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="hidden"><a href="#"></a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                        <li class="active">用户信息管理</li>
+                    </ol>
+                    <div class="clearfix">
+                    </div>
+        </div>
+		<div >
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					检索
+				</div>
+				<div class="panel-body">
+					<div class="form-inline">
+						<form action=" /selus " method="post" onsubmit="return checktext();" id="jiansuo">
+							<div class="form-inline">
+								用户账号:<input type="text" id="t_ids" name="user" class="form-control" />
+								用户姓名:<input type="text" id="t_name" name="name" class="form-control" />
+								<button id="search" type="submit" class="btn btn-primary">检索</button>
+								<button id="add" type="button" class="btn btn-danger" onclick="addteacher()">添加用户</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h>用户信息</h>
+				</div>
+				<div class="panel-body">
+					<table id="tb" class="table table-striped table-bordered">
+						<tr>
+							<th>账号</th><th>姓名</th><th>电话</th><th>QQ</th><th>email</th><th>住址</th><th>操作</th>
+						</tr>
+						<tr>
+						{% for i in userlist %}
+						<td>{{ i[0] }}</td>
+						<td>{{ i[1] }}</td>
+                            <td>{{ i[2] }}</td>
+                            <td>{{ i[3] }}</td>
+                            <td>{{ i[4] }}</td>
+                            <td>{{ i[5] }}</td>
+						<td>
+						<button class="btn btn-primary" onclick="editteacher(this)">修改用户密码</button>
+						<button class="btn btn-danger" onclick="delteacher(this)">删除用户</button>
+
+						</td>
+						</tr>
+						{% endfor %}
+					</table>
+
+				</div>
+				<div class="modal fade" id="editteacher-modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								修改新密码
+							</div>
+							<form id="editteform" action="/supdatepwd" target="contentFrame" method="post">
+							<div class="modal-body">
+
+					         	账号：<input type="text" name="user" class="form-control" placeholder="请输入账号">
+
+					        	密码：<input type="password" name="pwd" class="form_control" placeholder="请输入新密码">
+							</div>
+							<div class="modal-footer">
+								<button id="delsubmit" type="submit" class="btn btn-danger"  >确认</button>
+							</form>
+								<button id="cancel" type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="addteacher-modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								添加用户
+							</div>
+							<div class="modal-body">
+					     <form action="/insertuser" method="post" id="addteaform">
+						<div class="form-group">
+
+				           	 账号：<input type="text" id="id" name="user" class="form-control" placeholder="请输入账号" />
+
+
+						</div>
+
+						<div class="form-group">
+							密码：<input type="password" name="password"class="form-control" placeholder="请输入密码" />
+
+						</div>
+
+							</div>
+							<div class="modal-footer">
+								<button id="save-1" type="submit" class="btn btn-success">确认</button>
+
+					</form>
+								<button id="cancel" type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="delteacher-modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								是否删除此用户？
+							</div>
+							<div class="modal-body">
+					         <form id="delteacherform" action="/deluser" method="post">
+					         	账号：<input type="text" name="user" class="form-control" placeholder="请输入账号">
+                            </div>
+							<div class="modal-footer">
+                                <button id="dsubmit" type="submit" class="btn btn-info" >确认删除</button>
+                                </form>
+								<button id="cancel" type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</body>
+</html>

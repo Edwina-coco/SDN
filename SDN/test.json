@@ -1,0 +1,37 @@
+{
+    "flow": [
+        {
+            "id":"flow1",    //流表名称
+            "priority": "56",    //优先级
+            "table": "0",    //table ID
+            "match": {
+                "in-port": "openflow:1:1",    //匹配：入接口
+                "ethernet-match": {
+                    "ethernet-type": {
+                        "type": "2048"    //匹配：以太网类型
+                    }
+                },
+                "ipv4-source": "10.0.0.1/32",    //匹配：源IP
+                "ipv4-destination": "10.0.0.4/32"    //匹配：目的IP
+            },
+            "instructions": {
+                "instruction": [
+                    {
+                        "order": "0",
+                        "apply-actions": {
+                            "action": [
+                                {
+                                    "order": "0",
+//                                    "output-action": {
+//                                        "output-node-connector": "openflow:1:2" //动作：转发至出接口
+//                                    }
+                                    "drop-action": {}
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

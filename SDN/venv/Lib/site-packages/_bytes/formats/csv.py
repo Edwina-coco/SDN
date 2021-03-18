@@ -1,0 +1,14 @@
+__author__ = 'code-museum'
+
+from _bytes.lists import SeparatedList
+from _bytes.objects import String
+
+
+class CSVLine(SeparatedList):
+    list_members_type = String
+    separator = b','
+
+
+class CSVFormat(SeparatedList):
+    list_members_type = CSVLine
+    separator = b'\n'

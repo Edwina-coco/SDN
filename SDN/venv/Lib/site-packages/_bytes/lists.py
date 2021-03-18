@@ -1,0 +1,30 @@
+__author__ = 'code-museum'
+
+from _bytes.objects import BytesObject
+
+
+class SeparatedList(BytesObject):
+    separator = b''
+    list_members_type = None
+
+    def __init__(self, values=None):
+        self.values = values
+
+    @classmethod
+    def create(cls, values):
+        instance = cls()
+        instance.values = values
+        return instance
+
+    @classmethod
+    def deserialize(cls, to_deserialize):
+        return cls.create([cls.list_members_type.deserialize(m) for m in to_deserialize.split(cls.separator)])
+
+    def serialize(self):
+        serialized_members = []
+        for member in self.values:
+            serialized_members.append(self.list_members_type.create(member).serialize())
+        return self.separator.join(serialized_members)
+
+    def __eq__(self, other):
+        return self.values == other.values

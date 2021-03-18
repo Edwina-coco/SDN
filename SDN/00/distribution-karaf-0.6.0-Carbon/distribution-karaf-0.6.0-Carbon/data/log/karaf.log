@@ -1,0 +1,7 @@
+2019-04-22 10:09:17,618 | WARN  | ix.fileinstall]) | fileinstall                      | 7 - org.apache.felix.fileinstall - 3.5.2 | D:\CODE\distribution-karaf-0.6.0-Carbon\deploy does not exist, please create it.
+2019-04-22 10:09:17,621 | WARN  | ix.fileinstall]) | fileinstall                      | 7 - org.apache.felix.fileinstall - 3.5.2 | Root path does not exist: D:\CODE\distribution-karaf-0.6.0-Carbon\deploy
+2019-04-22 10:09:17,623 | WARN  | ix.fileinstall]) | fileinstall                      | 7 - org.apache.felix.fileinstall - 3.5.2 | F:\code\distribution-karaf-0.6.0-Carbon\deploy does not exist, please create it.
+2019-04-22 10:09:17,623 | WARN  | ix.fileinstall]) | fileinstall                      | 7 - org.apache.felix.fileinstall - 3.5.2 | Root path does not exist: F:\code\distribution-karaf-0.6.0-Carbon\deploy
+2019-04-22 10:09:17,626 | WARN  | ix.fileinstall]) | fileinstall                      | 7 - org.apache.felix.fileinstall - 3.5.2 | D:\1学习资料\SDN\00\distribution-karaf-0.6.0-Carbon\distribution-karaf-0.6.0-Carbon\deploy does not exist, please create it.
+2019-04-22 10:09:17,628 | WARN  | ix.fileinstall]) | fileinstall                      | 7 - org.apache.felix.fileinstall - 3.5.2 | Root path does not exist: D:\1学习资料\SDN\00\distribution-karaf-0.6.0-Carbon\distribution-karaf-0.6.0-Carbon\deploy
+2019-04-22 10:09:17,663 | INFO  | Event Dispatcher | fileinstall                      | 7 - org.apache.felix.fileinstall - 3.5.2 | Updating configuration from org.ops4j.pax.logging.cfg

@@ -1,0 +1,36 @@
+{
+        "input": {
+            "match": {
+                "in-port": "1",
+                "ethernet-match": {
+                    "ethernet-type": {
+                        "type": "0x0800"
+                    }
+                },
+                "ipv4-source": "192.168.1.1",
+                "ipv4-destination": "192.168.1.2"
+            },
+            "instructions": {
+                "instruction": [
+                    {
+                        "order": "0",
+                        "apply-actions": {
+                            "action": [
+                                {
+                                    "order": "0",
+                                    "drop-action": {}
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "out_port": "2",
+            "priority": "27",
+            "idle-timeout": "0",
+            "hard-timeout": "0",
+            "cookie": "100000000",
+            "table_id": "0",
+            "node": "/opendaylight-inventory:nodes/opendaylight-inventory:node[opendaylight-inventory:id='openflow:1']"
+        }
+}

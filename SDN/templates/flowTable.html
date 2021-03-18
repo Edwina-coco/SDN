@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实时流量监控</title>
+</head>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<body>
+<a href="http://127.0.0.1:8000/SDN_Web_Manage/" class="list-group-item">返回主页</a>
+<table class="table table-striped">
+    {% for chartdata in ChartData %}
+    <tr>
+        <th>{{ chartdata.d00 }}</th>
+        <td>{{ chartdata.d01 }}</td>
+        <td>{{ chartdata.d02 }}</td>
+        <td>{{ chartdata.d03 }}</td>
+        <td>{{ chartdata.d04 }}</td>
+        <td>{{ chartdata.d05 }}</td>
+        <td>{{ chartdata.d06 }}</td>
+        <td>{{ chartdata.d07 }}</td>
+        <td>{{ chartdata.d08 }}</td>
+        <td>{{ chartdata.d09 }}</td>
+        <td>{{ chartdata.d10 }}</td>
+        <td>{{ chartdata.d11 }}</td>
+        <td>{{ chartdata.d12 }}</td>
+        <td>{{ chartdata.d13 }}</td>
+        <td>{{ chartdata.d14 }}</td>
+        <td>{{ chartdata.d15 }}</td>
+        <td>{{ chartdata.d16 }}</td>
+        <td>{{ chartdata.d17 }}</td>
+        <td>{{ chartdata.d18 }}</td>
+        <td>{{ chartdata.d19 }}</td>
+        <td>{{ chartdata.d20 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

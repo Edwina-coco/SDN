@@ -1,0 +1,1 @@
+{"input":{"instructions":{"instruction":[{"order":"0","apply-actions":{"action":[{"order":"0","output-action":{"output-node-connector":"NORMAL","max-length":"64"}}]}}]},"priority":"1","idle-timeout":"0","hard-timeout":"0","table_id":"0","node":"/opendaylight-inventory:nodes/opendaylight-inventory:node[opendaylight-inventory:id='openflow:1']"}}

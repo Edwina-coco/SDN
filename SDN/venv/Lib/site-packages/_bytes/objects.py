@@ -1,0 +1,100 @@
+__author__ = 'code-museum'
+
+import struct as _struct
+
+
+class BytesObject(object):
+    @classmethod
+    def create(cls, *args, **kwargs):
+        instance = cls(*args, **kwargs)
+        return instance
+
+    @classmethod
+    def deserialize(cls, to_deserialize):
+        return to_deserialize
+
+    def serialize(self):
+        return self
+
+    @staticmethod
+    def validate_deserialized(deserialized):
+        pass
+
+    @staticmethod
+    def validate_serialized(deserialized):
+        pass
+
+
+class NumericBytesObject(BytesObject):
+    def __init__(self):
+        self.number = None
+
+    @classmethod
+    def create(cls, number):
+        instance = cls()
+        instance.number = number
+        return instance
+
+
+class UnsignedByte(NumericBytesObject):
+    length = 1
+
+    @classmethod
+    def deserialize(cls, to_deserialize):
+        return ord(to_deserialize)
+
+    def serialize(self):
+        return bytearray([self.number])
+
+    @staticmethod
+    def validate_deserialized(deserialized):
+        assert 0 <= deserialized < 256, 'Unsigned byte must be between 0 to 256'
+
+
+class StructBytesObject(BytesObject):
+    struct_format = ''
+
+    def __init__(self):
+        self.value = None
+
+    @classmethod
+    def create(cls, value):
+        instance = cls()
+        instance.value = value
+        return instance
+
+    @classmethod
+    def deserialize(cls, to_deserialize):
+        return _struct.unpack(cls.struct_format, to_deserialize)[0]
+
+    def serialize(self):
+        return _struct.pack(self.struct_format, self.value)
+
+
+class UnsignedInt32(StructBytesObject):
+    length = 4
+    struct_format = '>I'
+
+
+class BigEndianUnsignedInt32(StructBytesObject):
+    length = 4
+    struct_format = '<I'
+
+
+class String(BytesObject):
+    def __init__(self, value=None):
+        self.value = value
+
+    @classmethod
+    def create(cls, value):
+        instance = cls()
+        instance.value = value
+        return instance
+
+    @classmethod
+    def deserialize(cls, to_deserialize):
+        return to_deserialize
+
+    def serialize(self):
+        return self.value
+    pass

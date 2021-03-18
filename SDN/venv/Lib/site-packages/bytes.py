@@ -1,0 +1,4 @@
+__author__ = 'code-museum'
+
+from _bytes.sections import BytesSection
+from _bytes import objects

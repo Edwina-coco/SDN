@@ -1,0 +1,14 @@
+Metadata-Version: 2.0
+Name: bytes
+Version: 0.0.1.dev4
+Summary: Bytes: Serialization and deserialization utilities.
+Home-page: https://github.com/code-museum/bytes
+Author: code-museum
+Author-email: code-museum@users.noreply.github.com
+License: GNU General Public License, version 2
+Keywords: Serialization deserialization formats marshaling
+Platform: UNKNOWN
+
+UNKNOWN
+
+
