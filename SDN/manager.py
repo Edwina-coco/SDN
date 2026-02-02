@@ -26,7 +26,7 @@ def topologySave():
     c.setopt(c.WRITEDATA, buffer)
     c.perform()
     c.close()
-
+    # jjjj测试推送
     body = buffer.getvalue()
     soup = BeautifulSoup(str(body, encoding="utf-8"))
     HostTable = []
