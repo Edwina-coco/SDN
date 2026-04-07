@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 
 
 class topologyTable(object):
+    # Extended topology model with traffic counters/time buckets.
     openflowID = ""
     openflowSPort = ""
     openflowDPort = ""
