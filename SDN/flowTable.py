@@ -3,6 +3,7 @@ from io import BytesIO
 from bs4 import BeautifulSoup
 
 class flowTable(object):
+    # Lightweight flow model object for template rendering.
     openflowID = ""
     openflowSPort = ""
     packet="断开"

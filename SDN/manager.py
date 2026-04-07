@@ -16,7 +16,13 @@ import requests
 import topologyTable1
 import controllerapi
 
+# Main Flask backend:
+# - user/session management
+# - topology visualization
+# - flow/meter management through controllerapi
+
 def topologySave():
+    # Bootstrap topology cache at startup for later page rendering.
     buffer = BytesIO()
     c = pycurl.Curl()
     c.setopt(c.USERNAME, 'admin')
@@ -158,6 +164,7 @@ app.secret_key="zhang"
 #request.path=="/" or request.path=="/login" or request.path=="/zhuce" or request.path=="/" :
 @app.before_request
 def is_login():
+    # Basic access guard: only /index requires session in current logic.
     if request.path!="/index" :
         return None
     if session.get("user1"):
@@ -167,10 +174,12 @@ def is_login():
 
 @app.route("/")
 def login():
+    # Login page.
     return render_template("log.html")
 
 @app.route("/login",methods=["GET","POST"])
 def panduan():
+    # Authenticate admin or normal user and redirect to role homepage.
     tag=1
     sftag=None
     sf=request.form.get("peo")
@@ -196,28 +205,33 @@ def panduan():
 
 @app.route("/index")
 def index():
+    # Admin homepage.
     session["user"]=""
     return render_template("index.html",session_user=session["user1"])
 
 @app.route("/sindex")
 def sindex():
+    # Standard user homepage.
     session["user"]=""
     return render_template("sindex.html",session_user=session["user1"])
 
 @app.route("/sinform",methods=["GET","POST"])
 def sinform():
+    # Show standard user profile details.
     zgh=session["user1"]
     info=sql.sel_sinfo(zgh)
     return render_template("sadm.html",userinfo=info[0])
 
 @app.route("/inform",methods=["GET","POST"])
 def inform():
+    # Show admin profile details.
     zgh=session["user1"]
     info=sql.sel_info(zgh)
     return render_template("adm.html",userinfo=info[0])
 
 @app.route("/topology",methods=["GET","POST"])
 def topology():
+    # Pull latest topology from controller and build page context.
     buffer = BytesIO()
     c = pycurl.Curl()
     c.setopt(c.USERNAME, 'admin')
@@ -380,10 +394,12 @@ def topology():
 
 @app.route("/main")
 def ma():
+    # Keep compatibility with old entry route.
     return render_template("index.html")
 
 @app.route("/updatepwd",methods=["GET","POST"])
 def updatepwd():
+    # Admin updates password in user table.
     user=request.form.get("user")
     pwd=request.form.get("pwd")
     sql.updatepwd(user,pwd)
@@ -391,6 +407,7 @@ def updatepwd():
 
 @app.route("/supdatepwd",methods=["GET","POST"])
 def supdatepwd():
+    # Redirect path for password change from user account page.
     user=request.form.get("user")
     pwd=request.form.get("pwd")
     sql.updatepwd(user,pwd)
@@ -398,6 +415,7 @@ def supdatepwd():
 
 @app.route("/updateinfo",methods=["GET","POST"])
 def updateinfo():
+    # Update admin profile fields.
     user=request.form.get("user")
     qq=request.form.get("qq")
     name = request.form.get("name")
@@ -409,6 +427,7 @@ def updateinfo():
 
 @app.route("/updatespwd",methods=["GET","POST"])
 def updatespwd():
+    # Update password for standard user table.
     user=request.form.get("user")
     pwd=request.form.get("pwd")
     sql.updatespwd(user,pwd)
@@ -416,6 +435,7 @@ def updatespwd():
 
 @app.route("/updatesinfo",methods=["GET","POST"])
 def updatesinfo():
+    # Update standard user profile fields.
     user=request.form.get("user")
     qq=request.form.get("qq")
     name = request.form.get("name")
@@ -427,11 +447,13 @@ def updatesinfo():
 
 @app.route("/useracount",methods=["GET","POST"])
 def useracount():
+    # User management list page.
     userlist=sql.sel_userlist()
     return render_template("useracount.html",userlist=userlist)
 
 @app.route("/deluser",methods=["GET","POST"])
 def deluser():
+    # Delete login record and profile record together.
     use=request.form.get("user")
     sql.deluse(use)
     sql.deluseinfo(use)
@@ -439,12 +461,14 @@ def deluser():
 
 @app.route("/selus",methods=["GET","POST"])
 def selus():
+    # Filter user list by username.
     use=request.form.get("user")
     date=sql.selu(use)
     return render_template("useracount.html",userlist=date)
 
 @app.route("/insertuser",methods=["GET","POST"])
 def insertuser():
+    # Create login record and initialize profile record.
     user=request.form.get("user")
     pwd=request.form.get("password")
     sql.insertuse(user,pwd)
@@ -453,6 +477,7 @@ def insertuser():
 
 @app.route("/zaibei",methods=["GET","POST"])
 def zaibei():
+    # Flow management page (list switch ids and current flows).
     openlist=[]
     for i in topologyLink:
         if i.openflowID!='':
@@ -462,6 +487,7 @@ def zaibei():
 
 @app.route("/liuliang",methods=["GET","POST"])
 def liuliang():
+    # Read traffic counters and render QoS/traffic dashboard.
     openflowlist=[]
     for i in topologyLink:
         if i.openflowID!='':
@@ -544,6 +570,7 @@ def liuliang():
 
 @app.route("/switchinfo",methods=["GET","POST"])
 def switchinfo():
+    # Switch info page.
     openlist=[]
     for i in topologyLink:
         if i.openflowID!='':
@@ -552,6 +579,7 @@ def switchinfo():
 
 @app.route("/infoset",methods=["GET","POST"])
 def infoset():
+    # Save per-switch status settings submitted from form.
     for i in topologyLink:
         if i.openflowID!='':
             s= request.form.get(i.openflowID)
@@ -561,6 +589,7 @@ def infoset():
 
 @app.route("/deleteflow",methods=["GET","POST"])
 def delete_flow():
+    # Delete one flow from selected switch.
     swid=request.form.get('swid')
     flowid=request.form.get('id')
     controllerapi.flow_delete(swid,flowid)
@@ -568,6 +597,7 @@ def delete_flow():
 
 @app.route("/addflow",methods=["POST"])
 def add_flow():
+    # Build a flow rule from form fields and submit to controller.
     res=dict()
     res["status"]='succes'
     flow_id=request.form.get('flow_id')
@@ -589,6 +619,7 @@ def add_flow():
         'flow-name':flow_id,
         'table_id':0
     }
+    # Match section is composed dynamically based on optional fields.
     if pro:
         flow_set['priority']=pro
     match_set={}
@@ -636,6 +667,7 @@ def add_flow():
             }
     print(meter)
     if meter:
+        # If meter is selected, apply meter first then actions.
         action_meter = {
             "order": "0",
             "meter": {"meter-id": meter}
@@ -670,6 +702,7 @@ def add_flow():
 
 @app.route("/Qos")
 def qosmanage():
+    # Meter/QoS overview page.
     openlist = []
     for i in topologyLink:
         if i.openflowID != '':
@@ -700,6 +733,7 @@ def qosmanage():
 
 @app.route("/add_meter",methods=["POST"])
 def addmeter():
+    # Create a meter entry on selected switch.
     switch_id=request.form.get("swid")
     meter_id=request.form.get("meterid")
     burst_size=request.form.get("burst-size")

@@ -4,7 +4,11 @@ import json
 import base64
 import http.client
 from http_post import http_post
+
+# Utilities for talking to OpenDaylight RESTCONF APIs.
+
 def pre_get(urls):
+    # Generic authenticated GET against controller.
     try:
         url = urls
         str='admin' + ':' + 'admin'
@@ -22,6 +26,7 @@ def pre_get(urls):
 
 
 def pre_put(url, body):
+    # Generic authenticated PUT against controller.
     try:
         strs = 'admin' + ':' + 'admin'
         auth = base64.b64encode(strs.encode())
@@ -42,6 +47,7 @@ def pre_put(url, body):
         return 'add failure'
 
 def pre_post(url,body):
+    # Generic authenticated POST against controller.
     try:
         strs = 'admin' + ':' + 'admin'
         auth = base64.b64encode(strs.encode())
@@ -61,6 +67,7 @@ def pre_post(url,body):
         return 'add failure'
 
 def add_meter(swid,meterid,size,lim,rate):
+    # Build and submit a meter config to the target switch.
     switch_id = "openflow:231225997531456"
     url = "http://127.0.0.1:8181/restconf/config/opendaylight-inventory:nodes/node/" + swid + "/meter/"+meterid
 
@@ -93,6 +100,7 @@ def add_meter(swid,meterid,size,lim,rate):
     pre_put(url, body)
 
 def _process_operation_flows(data):
+    # Parse nodes payload into a lightweight flow list for UI.
     resp_data=[]
     data=json.loads(data)
     if "nodes" in data:
@@ -109,6 +117,7 @@ def _process_operation_flows(data):
     return resp_data
 
 def _process_operation_meter(data):
+    # Parse nodes payload into a lightweight meter list for UI.
     resp_data=[]
     data=json.loads(data)
     if "nodes" in data:
@@ -130,6 +139,7 @@ def _process_operation_meter(data):
     return resp_data
 
 def list_flows():
+    # Read operational flow data from all switches.
     res=dict()
     url="/restconf/operational/opendaylight-inventory:nodes"
     reply=pre_get(url)
@@ -147,6 +157,7 @@ def list_flows():
     return res
 
 def flow_delete(switch_id,flow_id):
+    # Delete a flow from table 0 of the specified switch.
     url_in = "/restconf/config/opendaylight-inventory:nodes/node/" + switch_id + "/flow-node-inventory:table/0/flow/"+flow_id
     auth = base64.b64encode('admin:admin'.encode())
     headers = {"Authorization": "Basic " + auth.decode(), "Content-Type": "application/json"}
@@ -158,16 +169,19 @@ def flow_delete(switch_id,flow_id):
         traceback.print_exc()
 
 def add_flow(sw_id,flow_id,flow):
+    # Add or replace a single flow entry on table 0.
     url="/restconf/config/opendaylight-inventory:nodes/node/" + sw_id + "/flow-node-inventory:table/0/flow/"+flow_id
     ref=pre_put(url,flow)
     return ref
 
 def add_qos(body):
+    # Call custom QoS RPC exposed by controller.
     url="/restconf/operations/qos-flow:add-qos-config"
     ref=pre_post(url,body)
     return ref
 
 def list_meter():
+    # Read configured meter entries from all switches.
     res=dict()
     url="/restconf/config/opendaylight-inventory:nodes"
     reply=pre_get(url)

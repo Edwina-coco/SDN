@@ -3,6 +3,7 @@ from io import BytesIO
 from bs4 import BeautifulSoup
 
 class topologyTable(object):
+    # Topology row model used by manager.py and templates.
     openflowID = ""
     openflowSPort = ""
     openflowDPort = ""
